@@ -1,0 +1,8 @@
+﻿{
+  "name": "Beastmaster.Core.Controllers",
+  "references": [
+    "Common.StateMachine",
+    "Beastmaster.Core.State",
+    "Beastmaster.Core.Primitives"
+  ]
+}

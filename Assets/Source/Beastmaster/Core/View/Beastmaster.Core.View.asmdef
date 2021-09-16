@@ -1,0 +1,19 @@
+{
+    "name": "Beastmaster.Core.View",
+    "references": [
+        "Common.UnityExtensions",
+        "Beastmaster.Core.State",
+        "Beastmaster.Core.Primitives",
+        "Beastmaster.Core.Configs",
+        "UniRx"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

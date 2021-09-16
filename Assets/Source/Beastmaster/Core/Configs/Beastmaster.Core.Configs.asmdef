@@ -1,0 +1,15 @@
+{
+    "name": "Beastmaster.Core.Configs",
+    "references": [
+        "Beastmaster.Core.Primitives"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

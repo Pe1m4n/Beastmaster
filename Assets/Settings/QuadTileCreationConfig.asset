@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b77b35e51d4a62a1b86dfdc1de7706, type: 3}
+  m_Name: QuadTileCreationConfig
+  m_EditorClassIdentifier: 
+  TilePrefab: {fileID: 3375612528868818388, guid: 1c37dd33aa0c3a74f895cb5b9b1adef8, type: 3}
+  TileWidth: 1.1
