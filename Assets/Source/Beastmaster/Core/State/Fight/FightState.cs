@@ -29,8 +29,8 @@ namespace Beastmaster.Core.State
             {
                 Tiles[index] = new TileState(new Coordinates()
                 {
-                    X = (index - index % FightConfig.LocationWidth) / FightConfig.LocationWidth,
-                    Y = index % FightConfig.LocationWidth
+                    X = index % FightConfig.LocationWidth,
+                    Y = (index - index % FightConfig.LocationWidth) / FightConfig.LocationWidth
                 });
             }
         }

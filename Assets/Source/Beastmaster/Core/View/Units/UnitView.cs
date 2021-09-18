@@ -1,14 +1,16 @@
 ﻿using System;
+using Beastmaster.Core.Primitives;
+using Beastmaster.Core.State;
 using UnityEngine;
 
 namespace Beastmaster.Core.View.Units
 {
     public class UnitView : MonoBehaviour
     {
-        [SerializeField] private Renderer _renderer;
         [SerializeField] private Animator _animator;
         
         private AnimationComponent _animationComponent;
+        private Direction _currentDirection;
         
         public int UnitId { get; private set; }
 
@@ -17,27 +19,15 @@ namespace Beastmaster.Core.View.Units
             _animationComponent = new AnimationComponent(_animator);
         }
 
-        public void Init(int unitId)
+        public void Init(UnitState state)
         {
-            UnitId = unitId;
+            UnitId = state.Id;
         }
         
         public void ApplyState(ViewState state)
         {
-            if (state.PlayerState.HoveredUnit == UnitId)
-            {
-                _renderer.material.color = Color.yellow;
-            }
-            else if (state.PlayerState.SelectedUnit == UnitId)
-            {
-                _renderer.material.color = Color.green;
-            }
-            else
-            {
-                _renderer.material.color = Color.white;
-            }
-            
-            _animationComponent.ApplyState(state.UnitViewStates[UnitId].AnimationState);
+            var unitViewState = state.UnitViewStates[UnitId];
+            _animationComponent.ApplyState(unitViewState.AnimationState);
         }
     }
 }

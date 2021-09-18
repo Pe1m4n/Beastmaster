@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
 using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State;
+using Common.PathFinding;
 using Common.StateMachine;
+using UnityEngine;
 
 namespace Beastmaster.Core.Controllers
 {
     public class UnitSelectedBehaviour : StateBehaviour<EStateType, EActionType, (PlayerState PlayerState, List<ActionData> Actions)>
     {
         private readonly IFightInputProvider _fightInputProvider;
+        private readonly PathFinder _pathFinder;
 
-        public UnitSelectedBehaviour(IFightInputProvider fightInputProvider)
+        public UnitSelectedBehaviour(IFightInputProvider fightInputProvider, PathFinder pathFinder)
         {
             _fightInputProvider = fightInputProvider;
+            _pathFinder = pathFinder;
         }
 
         public override void Tick((PlayerState PlayerState, List<ActionData> Actions) context)
@@ -28,9 +32,12 @@ namespace Beastmaster.Core.Controllers
 
             if (_fightInputProvider.RMBClicked() 
                 && !playerState.HoveredTile.Equals(Coordinates.None)
-                && playerState.FightState.GetTile(playerState.HoveredTile).OccupantId == FightStateConstants.TILE_NOT_OCCUPIED)
+                && playerState.FightState.TryGetUnit(playerState.SelectedUnit, out var unitState)
+                && playerState.FightState.TryGetTile(playerState.HoveredTile, out var tileState)
+                && tileState.OccupantId == FightStateConstants.TILE_NOT_OCCUPIED
+                && _pathFinder.TryGetPathsData(out var pathData)
+                && pathData.AvailableForPathing(tileState.Coordinates.X, tileState.Coordinates.Y))
             {
-                var unitState = playerState.FightState.Units[playerState.SelectedUnit];
                 context.Actions.Add(new MoveUnitAction.Data(
                     playerState.SelectedUnit,
                     playerState.HoveredTile,

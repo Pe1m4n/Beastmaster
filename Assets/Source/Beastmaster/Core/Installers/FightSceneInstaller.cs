@@ -4,6 +4,7 @@ using Beastmaster.Core.State;
 using Beastmaster.Core.View;
 using Beastmaster.Core.View.Configs;
 using Beastmaster.Core.View.Units;
+using Common.PathFinding;
 using UnityEngine;
 using Zenject;
 
@@ -20,12 +21,15 @@ namespace Beastmaster.Core.Installers
         {
             Container.BindInterfacesTo<GameLoop>().AsSingle().NonLazy();
             Container.BindInterfacesTo<LocalStateActionMediator>().AsSingle();
-            Container.Bind<PlayerController>().AsSingle();
+            Container.Bind<PlayerController>().AsSingle().WithArguments(_fightConfig);
             Container.Bind<ActionsBindingContainer>().AsSingle();
             Container.BindInterfacesAndSelfTo<FightInputContainer>().AsSingle().WithArguments(_camera);
             Container.Bind<FightStateContainer>().AsSingle().WithArguments(_fightConfig);
+            Container.Bind<PathFinder>().AsSingle()
+                .WithArguments(_fightConfig.LocationWidth, _fightConfig.LocationHeight);
             
             BindViews();
+            
         }
 
         private void BindViews()

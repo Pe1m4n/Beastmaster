@@ -2,6 +2,7 @@
     "name": "Beastmaster.Core.View",
     "references": [
         "Common.UnityExtensions",
+        "Common.PathFinding",
         "Beastmaster.Core.State",
         "Beastmaster.Core.Primitives",
         "Beastmaster.Core.Configs",

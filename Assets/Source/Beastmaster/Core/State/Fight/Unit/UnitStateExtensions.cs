@@ -28,6 +28,8 @@ namespace Beastmaster.Core.State
         public static bool TryGetUnit(this FightState state, int unitId, out UnitState unitState)
         {
             unitState = null;
+            if (unitId == FightStateConstants.NO_UNIT)
+                return false;
             
             foreach (var unit in state.Units)
             {

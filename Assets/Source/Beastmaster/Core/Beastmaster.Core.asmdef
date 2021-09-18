@@ -6,6 +6,7 @@
     "Beastmaster.Core.Configs",
     "Beastmaster.Core.Primitives",
     "Beastmaster.Core.Controllers",
+    "Common.PathFinding",
     "Zenject"
   ]
 }

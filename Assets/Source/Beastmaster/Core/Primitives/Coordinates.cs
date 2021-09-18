@@ -13,5 +13,10 @@ namespace Beastmaster.Core.Primitives
         {
             return $"[{X}|{Y}]";
         }
+
+        public bool Equals(int x, int y)
+        {
+            return X == x && Y == y;
+        }
     }
 }

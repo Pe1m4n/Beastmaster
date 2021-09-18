@@ -32,7 +32,7 @@ namespace Beastmaster.Core.View.Configs
 
         public override int GetTileIndexFromCoordinates(FightState state, Coordinates coordinates)
         {
-            return coordinates.X * state.FightConfig.LocationWidth + coordinates.Y;
+            return coordinates.Y * state.FightConfig.LocationWidth + coordinates.X;
         }
     }
 }

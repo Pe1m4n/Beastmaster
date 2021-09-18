@@ -2,7 +2,9 @@
   "name": "Beastmaster.Core.Controllers",
   "references": [
     "Common.StateMachine",
+    "Common.PathFinding",
     "Beastmaster.Core.State",
-    "Beastmaster.Core.Primitives"
+    "Beastmaster.Core.Primitives",
+    "Beastmaster.Core.Configs"
   ]
 }

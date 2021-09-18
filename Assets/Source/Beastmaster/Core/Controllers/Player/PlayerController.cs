@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using Beastmaster.Core.Configs;
+using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State;
+using Common.PathFinding;
 using Common.StateMachine;
 
 namespace Beastmaster.Core.Controllers
@@ -8,8 +11,11 @@ namespace Beastmaster.Core.Controllers
     {
         private readonly StateMachine<EStateType, EActionType, (PlayerState, List<ActionData>)> _stateMachine; //How does tuple affect performance?
 
-        public PlayerController(IFightInputProvider fightInputProvider)
+        private PathFinderController _pathFinderController;
+        
+        public PlayerController(IFightInputProvider fightInputProvider, PathFinder pathFinder, FightConfig fightConfig)
         {
+            _pathFinderController = new PathFinderController(pathFinder, fightConfig);
             _stateMachine = new StateMachine<EStateType, EActionType, (PlayerState, List<ActionData>)>(new StateTypeEqualityComparer(),
                 new ActionsTypeEqualityComparer());
 
@@ -19,7 +25,7 @@ namespace Beastmaster.Core.Controllers
                 .To(EStateType.Default);
 
             _stateMachine.BindBehaviourToState(EStateType.Default, new DefaultBehaviour(fightInputProvider))
-                .BindBehaviourToState(EStateType.UnitSelected, new UnitSelectedBehaviour(fightInputProvider));
+                .BindBehaviourToState(EStateType.UnitSelected, new UnitSelectedBehaviour(fightInputProvider, pathFinder));
             
             _stateMachine.Start(EStateType.Default);
         }
@@ -27,6 +33,8 @@ namespace Beastmaster.Core.Controllers
         public void Tick(PlayerState state, List<ActionData> actions)
         {
             _stateMachine.Tick((state, actions));
+            
+            _pathFinderController.Tick(state);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Beastmaster.Core.State;
+using Common.PathFinding;
 using Common.StateMachine;
+using UnityEngine;
 
 namespace Beastmaster.Core.Controllers
 {
@@ -15,16 +17,17 @@ namespace Beastmaster.Core.Controllers
 
         public override void Tick((PlayerState PlayerState, List<ActionData> Actions) context)
         {
-            context.PlayerState.HoveredTile = _fightInputProvider.GetTileUnderCursor();
-            context.PlayerState.HoveredUnit = _fightInputProvider.GetUnitIdUnderCursor();
+            var state = context.PlayerState;
+            state.HoveredTile = _fightInputProvider.GetTileUnderCursor();
+            state.HoveredUnit = _fightInputProvider.GetUnitIdUnderCursor();
 
             if (_fightInputProvider.LMBClicked())
             {
-                context.PlayerState.SelectedTile = context.PlayerState.HoveredTile;
-                context.PlayerState.SelectedUnit = context.PlayerState.HoveredUnit;
+                state.SelectedTile = state.HoveredTile;
+                state.SelectedUnit = state.HoveredUnit;
             }
 
-            if (context.PlayerState.SelectedUnit != FightStateConstants.NO_UNIT)
+            if (state.SelectedUnit != FightStateConstants.NO_UNIT)
             {
                 ActionPerformed(EActionType.UnitSelected);
             }

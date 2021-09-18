@@ -6,5 +6,6 @@
         public const int NO_UNIT = -1;
         public const int LEFT_PLAYER_ID = 1;
         public const int RIGHT_PLAYER_ID = 1;
+        public const int TEMP_UNIT_SPEED = 3;
     }
 }

@@ -378,8 +378,8 @@ MonoBehaviour:
   _camera: {fileID: 699666183}
   _tileGridCreationStrategy: {fileID: 11400000, guid: 0e3b510db1f2ee64e901ea532b0e6c36, type: 2}
   _fightConfig:
-    LocationWidth: 7
-    LocationHeight: 10
+    LocationWidth: 10
+    LocationHeight: 7
     LeftPlayerSpawnPoints:
     - X: 0
       Y: 1

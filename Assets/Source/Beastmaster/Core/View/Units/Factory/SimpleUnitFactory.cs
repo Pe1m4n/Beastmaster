@@ -23,7 +23,7 @@ namespace Beastmaster.Core.View.Units
                 throw new InvalidOperationException(
                     $"Prefab for unit {state.UnitTypeId} doesn't have UnitView component attached to it's children");
             }
-            unitView.Init(state.Id);
+            unitView.Init(state);
 
             return unitView;
         }
