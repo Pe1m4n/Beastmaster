@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Beastmaster.Core.State
+namespace Beastmaster.Core.State.Fight
 {
     public class ActionsBindingContainer
     {

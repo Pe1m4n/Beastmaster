@@ -2,6 +2,7 @@
 using Beastmaster.Core.Configs;
 using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Common.PathFinding;
 using Common.StateMachine;
 
@@ -11,11 +12,11 @@ namespace Beastmaster.Core.Controllers
     {
         private readonly StateMachine<EStateType, EActionType, (PlayerState, List<ActionData>)> _stateMachine; //How does tuple affect performance?
 
-        private PathFinderController _pathFinderController;
+        private readonly PathFinderController _pathFinderController;
         
-        public PlayerController(IFightInputProvider fightInputProvider, PathFinder pathFinder, FightConfig fightConfig)
+        public PlayerController(IFightInputProvider fightInputProvider, FightConfig fightConfig)
         {
-            _pathFinderController = new PathFinderController(pathFinder, fightConfig);
+            _pathFinderController = new PathFinderController(fightConfig);
             _stateMachine = new StateMachine<EStateType, EActionType, (PlayerState, List<ActionData>)>(new StateTypeEqualityComparer(),
                 new ActionsTypeEqualityComparer());
 
@@ -25,7 +26,7 @@ namespace Beastmaster.Core.Controllers
                 .To(EStateType.Default);
 
             _stateMachine.BindBehaviourToState(EStateType.Default, new DefaultBehaviour(fightInputProvider))
-                .BindBehaviourToState(EStateType.UnitSelected, new UnitSelectedBehaviour(fightInputProvider, pathFinder));
+                .BindBehaviourToState(EStateType.UnitSelected, new UnitSelectedBehaviour(fightInputProvider));
             
             _stateMachine.Start(EStateType.Default);
         }

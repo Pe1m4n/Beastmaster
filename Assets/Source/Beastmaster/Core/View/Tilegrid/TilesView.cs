@@ -1,6 +1,7 @@
 ﻿using System;
 using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Beastmaster.Core.View.Configs;
 using Common.PathFinding;
 using UnityEngine;
@@ -11,16 +12,13 @@ namespace Beastmaster.Core.View
     public class TilesView : IDisposable
     {
         private readonly TileGridCreationStrategy _gridCreationStrategy;
-        private readonly PathFinder _pathFinder;
         private readonly TileView[] _tileViews;
         
         public TilesView(TileGridCreationStrategy gridCreationStrategy,
             Transform rootTransform,
-            FightStateContainer fightStateContainer,
-            PathFinder pathFinder)
+            FightStateContainer fightStateContainer)
         {
             _gridCreationStrategy = gridCreationStrategy;
-            _pathFinder = pathFinder;
             var tilesRoot = new GameObject("TilesView");
             tilesRoot.transform.parent = rootTransform;
 
@@ -29,7 +27,7 @@ namespace Beastmaster.Core.View
         
         public void ApplyState(ViewState state)
         {
-            var hasPathData = _pathFinder.TryGetPathsData(out var pathData);
+            var pathData = state.PlayerState.CurrentPathData;
             
             for (int i = 0; i < _tileViews.Length; i++)
             {
@@ -39,7 +37,7 @@ namespace Beastmaster.Core.View
                 {
                     tile.SetColor(Color.yellow);
                 }
-                else if (hasPathData && pathData.AvailableForPathing(tile.Coordinates.X, tile.Coordinates.Y))
+                else if (pathData.AvailableForPathing(tile.Coordinates.X, tile.Coordinates.Y))
                 {
                     tile.SetColor(Color.green);
                 }

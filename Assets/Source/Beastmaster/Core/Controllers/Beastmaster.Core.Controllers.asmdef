@@ -6,5 +6,6 @@
     "Beastmaster.Core.State",
     "Beastmaster.Core.Primitives",
     "Beastmaster.Core.Configs"
-  ]
+  ],
+  "allowUnsafeCode": true
 }

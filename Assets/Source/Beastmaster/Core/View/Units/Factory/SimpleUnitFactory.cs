@@ -1,5 +1,6 @@
 ﻿using System;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Common.UnityExtensions;
 using UnityEngine;
 using Object = UnityEngine.Object;

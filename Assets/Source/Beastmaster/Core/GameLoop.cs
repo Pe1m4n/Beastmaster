@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Beastmaster.Core.Controllers;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Beastmaster.Core.View;
 using Zenject;
 

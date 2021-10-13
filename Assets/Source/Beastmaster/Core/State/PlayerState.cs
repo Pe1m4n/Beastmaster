@@ -1,7 +1,8 @@
 ﻿using Beastmaster.Core.Primitives;
-using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
+using Common.PathFinding;
 
-namespace Beastmaster.Core.Controllers
+namespace Beastmaster.Core.State
 {
     public class PlayerState
     {
@@ -13,9 +14,13 @@ namespace Beastmaster.Core.Controllers
         public int HoveredUnit = FightStateConstants.NO_UNIT;
         public int SelectedUnit = FightStateConstants.NO_UNIT;
 
+        public PathFinder.TilesData CurrentPathData;
+
         public PlayerState(FightState fightState)
         {
             FightState = fightState;
+            CurrentPathData = new PathFinder.TilesData(FightState.FightConfig.LocationWidth,
+                FightState.FightConfig.LocationHeight);
         }
     }
 }

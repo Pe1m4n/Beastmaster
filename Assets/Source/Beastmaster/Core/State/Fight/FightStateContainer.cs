@@ -1,7 +1,6 @@
 ﻿using Beastmaster.Core.Configs;
-using Beastmaster.Core.State;
 
-namespace Beastmaster.Core
+namespace Beastmaster.Core.State.Fight
 {
     public class FightStateContainer
     {

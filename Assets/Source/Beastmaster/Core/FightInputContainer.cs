@@ -1,6 +1,7 @@
 ﻿using Beastmaster.Core.Controllers;
 using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Beastmaster.Core.View;
 using Beastmaster.Core.View.Units;
 using UnityEngine;

@@ -1,6 +1,6 @@
 ﻿using Beastmaster.Core.Primitives;
 
-namespace Beastmaster.Core.State
+namespace Beastmaster.Core.State.Fight
 {
     public sealed class SpawnUnitAction : AbstractStateAction<FightState, SpawnUnitAction.Data>
     {

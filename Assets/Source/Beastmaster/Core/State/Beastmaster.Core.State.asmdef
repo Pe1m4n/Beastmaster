@@ -1,12 +1,13 @@
 {
     "name": "Beastmaster.Core.State",
     "references": [
+        "Common.PathFinding",
         "Beastmaster.Core.Configs",
         "Beastmaster.Core.Primitives"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
-    "allowUnsafeCode": false,
+    "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

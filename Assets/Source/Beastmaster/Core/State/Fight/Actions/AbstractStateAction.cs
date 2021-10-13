@@ -1,4 +1,4 @@
-﻿namespace Beastmaster.Core.State
+﻿namespace Beastmaster.Core.State.Fight
 {
     public abstract class AbstractStateAction<TState, TData> where TData: ActionData
     {

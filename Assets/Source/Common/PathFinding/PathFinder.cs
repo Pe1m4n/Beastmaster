@@ -1,113 +1,100 @@
-﻿using UnityEngine;
-
-namespace Common.PathFinding
+﻿namespace Common.PathFinding
 {
-    public class PathFinder
+    public static class PathFinder
     {
-        private readonly Tile[,] _tiles;
-        private bool _populated;
-
-        public PathFinder(int width, int height)
+        public static void CalculatePathsData(ref TilesData tilesData, int xStart, int yStart, sbyte distance)
         {
-            _tiles = new Tile[width, height];
-            for (int x = 0; x < _tiles.GetLength(0); x++)
-            for (int y = 0; y < _tiles.GetLength(1); y++)
-                _tiles[x, y] = new Tile(x, y);
-        }
-        
-        public void CalculatePathsData(int xStart, int yStart, int distance, bool[,] occupationData)
-        {
-            Clear();
-            if (!TryGetSuitableTile(xStart, yStart, 0, out var startTile))
-                return;
-            
-            Debug.Assert(occupationData.GetLength(0) == _tiles.GetLength(0) 
-                         && occupationData.GetLength(1) == _tiles.GetLength(1));
-            
-            for (int x = 0; x < occupationData.GetLength(0); x++)
-            for (int y = 0; y < occupationData.GetLength(1); y++)
-            {
-                _tiles[x, y].Occupied = occupationData[x, y];
-            }
-            
+            ref var startTile = ref tilesData.GetTileRef(xStart, yStart);
             startTile.TotalCost = 0;
-            CalculateNeighbours(xStart, yStart, 1, distance);
-            _populated = true;
+            
+            CalculateNeighbours(ref tilesData, xStart, yStart, 1, distance);
         }
 
-        public bool TryGetPathsData(out Tile[,] data)
-        {
-            data = _tiles;
-            return _populated;
-        }
-
-        public void Clear()
-        {
-            for (int x = 0; x < _tiles.GetLength(0); x++)
-            for (int y = 0; y < _tiles.GetLength(1); y++)
-            {
-                var tile = _tiles[x, y];
-                tile.Occupied = false;
-                tile.TotalCost = int.MaxValue;
-            }
-
-            _populated = false;
-        }
-
-        private void CalculateNeighbours(int x, int y, int currentCost, int distance)
+        private static void CalculateNeighbours(ref TilesData tiles, int x, int y, int currentCost, sbyte distance)
         {
             if (currentCost > distance)
                 return;
             
-            if (TryGetSuitableTile(x + 1, y, currentCost, out var right))
+            if (IsSuitableTile(ref tiles, x + 1, y, currentCost))
+            {
+                ref var right = ref tiles.GetTileRef(x + 1, y);
                 right.TotalCost = currentCost;
-            if (TryGetSuitableTile(x, y + 1, currentCost, out var top))
+                CalculateNeighbours(ref tiles, right.X, right.Y, currentCost + 1, distance);
+            }
+            if (IsSuitableTile(ref tiles, x, y + 1, currentCost))
+            {
+                ref var top = ref tiles.GetTileRef(x, y + 1);
                 top.TotalCost = currentCost;
-            if (TryGetSuitableTile(x - 1, y, currentCost, out var left))
+                CalculateNeighbours(ref tiles, top.X, top.Y, currentCost + 1, distance);
+            }
+            if (IsSuitableTile(ref tiles, x - 1, y, currentCost))
+            {
+                ref var left = ref tiles.GetTileRef(x - 1, y);
                 left.TotalCost = currentCost;
-            if (TryGetSuitableTile(x, y - 1, currentCost, out var bottom))
+                CalculateNeighbours(ref tiles, left.X, left.Y, currentCost + 1, distance);
+            }
+            if (IsSuitableTile(ref tiles, x, y - 1, currentCost))
+            {
+                ref var bottom = ref tiles.GetTileRef(x, y - 1);
                 bottom.TotalCost = currentCost;
-
-            currentCost++;
-            if (right != null)
-                CalculateNeighbours(right.X, right.Y, currentCost, distance);
-            if (top != null)
-                CalculateNeighbours(top.X, top.Y, currentCost, distance);
-            if (left != null)
-                CalculateNeighbours(left.X, left.Y, currentCost, distance);
-            if (bottom != null)
-                CalculateNeighbours(bottom.X, bottom.Y, currentCost, distance);
+                CalculateNeighbours(ref tiles, bottom.X, bottom.Y, currentCost + 1, distance);
+            }
         }
 
-        private bool TryGetSuitableTile(int x, int y, int currentCost, out Tile tile)
+        private static bool IsSuitableTile(ref TilesData tiles, int x, int y, int currentCost)
         {
-            tile = null;
-            if (x < 0 || y < 0 || x >= _tiles.GetLength(0) || y >= _tiles.GetLength(1))
+            if (x < 0 || y < 0 || x >= tiles.Width || y >= tiles.Height)
             {
                 return false;
             }
 
-            tile = _tiles[x, y];
-            if (tile.Occupied || tile.TotalCost <= currentCost)
-            {
-                tile = null;
-                return false;
-            }
-            
-            return true;
+            ref readonly var tile = ref tiles.GetTileRefReadonly(x, y);
+            return !tile.Occupied && (tile.TotalCost > currentCost || tile.TotalCost < 0);
         }
         
-        public class Tile
+        public struct Tile
         {
-            public readonly int X;
-            public readonly int Y;
+            public static Tile InvalidTile = new Tile(-1, -1);
+            public readonly sbyte X;
+            public readonly sbyte Y;
             public bool Occupied;
-            public int TotalCost = int.MaxValue;
+            public int TotalCost;
 
-            public Tile(int x, int y)
+            public Tile(sbyte x, sbyte y)
             {
                 X = x;
                 Y = y;
+                Occupied = false;
+                TotalCost = -1;
+            }
+        }
+
+        public struct TilesData
+        {
+            private readonly Tile[,] _tiles;
+            
+            public readonly int Width;
+            public readonly int Height;
+            
+            public TilesData(int width, int height)
+            {
+                Width = width;
+                Height = height;
+                _tiles = new Tile[width, height];
+
+                for (sbyte x = 0; x < width; x++)
+                for (sbyte y = 0; y < height; y++)
+                    _tiles[x, y] = new Tile(x, y);
+            }
+
+            public ref Tile GetTileRef(int x, int y)
+            {
+                return ref _tiles[x, y];
+            }
+            
+            public ref readonly Tile GetTileRefReadonly(int x, int y)
+            {
+                return ref _tiles[x, y];
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Common.PathFinding;
 using Common.StateMachine;
 using UnityEngine;

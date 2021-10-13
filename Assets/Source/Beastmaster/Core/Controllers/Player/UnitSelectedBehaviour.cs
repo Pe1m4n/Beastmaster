@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Common.PathFinding;
 using Common.StateMachine;
 using UnityEngine;
@@ -10,12 +11,10 @@ namespace Beastmaster.Core.Controllers
     public class UnitSelectedBehaviour : StateBehaviour<EStateType, EActionType, (PlayerState PlayerState, List<ActionData> Actions)>
     {
         private readonly IFightInputProvider _fightInputProvider;
-        private readonly PathFinder _pathFinder;
 
-        public UnitSelectedBehaviour(IFightInputProvider fightInputProvider, PathFinder pathFinder)
+        public UnitSelectedBehaviour(IFightInputProvider fightInputProvider)
         {
             _fightInputProvider = fightInputProvider;
-            _pathFinder = pathFinder;
         }
 
         public override void Tick((PlayerState PlayerState, List<ActionData> Actions) context)
@@ -35,13 +34,14 @@ namespace Beastmaster.Core.Controllers
                 && playerState.FightState.TryGetUnit(playerState.SelectedUnit, out var unitState)
                 && playerState.FightState.TryGetTile(playerState.HoveredTile, out var tileState)
                 && tileState.OccupantId == FightStateConstants.TILE_NOT_OCCUPIED
-                && _pathFinder.TryGetPathsData(out var pathData)
-                && pathData.AvailableForPathing(tileState.Coordinates.X, tileState.Coordinates.Y))
+                && playerState.CurrentPathData.AvailableForPathing(tileState.Coordinates.X, tileState.Coordinates.Y))
             {
+                var path = new Path();
+                Debug.Assert(playerState.CurrentPathData.TryFillPath(path, unitState.Coordinates, tileState.Coordinates));
+                
                 context.Actions.Add(new MoveUnitAction.Data(
                     playerState.SelectedUnit,
-                    playerState.HoveredTile,
-                    unitState.Coordinates));
+                    path));
             }
 
             if (playerState.SelectedUnit == FightStateConstants.NO_UNIT)

@@ -1,21 +1,20 @@
-﻿using Beastmaster.Core.Primitives;
+﻿using Beastmaster.Core.Controllers;
+using Beastmaster.Core.Primitives;
 using UnityEngine;
 
-namespace Beastmaster.Core.State
+namespace Beastmaster.Core.State.Fight
 {
     public class MoveUnitAction : AbstractStateAction<FightState, MoveUnitAction.Data>
     {
         public class Data : ActionData
         {
             public readonly int UnitId;
-            public readonly Coordinates MoveTo;
-            public readonly Coordinates MoveFrom;
+            public readonly Path Path;
                 
-            public Data(int unitId, Coordinates moveTo, Coordinates moveFrom, bool immutable = false) : base(immutable)
+            public Data(int unitId, Path path, bool immutable = false) : base(immutable)
             {
+                Path = path;
                 UnitId = unitId;
-                MoveTo = moveTo;
-                MoveFrom = moveFrom;
             }
         }
 
@@ -25,15 +24,19 @@ namespace Beastmaster.Core.State
             {
                 Debug.LogError($"{nameof(MoveUnitAction)} Error: Couldn't get unit with id {data.UnitId}");
             }
-            var origin = state.GetTile(data.MoveFrom);
-            var destination = state.GetTile(data.MoveTo);
             
-            Debug.Assert(unit.Coordinates.Equals(data.MoveFrom));
+            var coordinatesFrom = data.Path[0];
+            var coordinatesTo = data.Path[data.Path.Length - 1];
+            
+            var origin = state.GetTile(coordinatesFrom);
+            var destination = state.GetTile(coordinatesTo);
+            
+            Debug.Assert(unit.Coordinates.Equals(coordinatesFrom));
             Debug.Assert(destination.OccupantId == FightStateConstants.TILE_NOT_OCCUPIED);
 
             origin.OccupantId = FightStateConstants.TILE_NOT_OCCUPIED;
             destination.OccupantId = unit.Id;
-            unit.Coordinates = data.MoveTo;
+            unit.Coordinates = coordinatesTo;
         }
     }
 }

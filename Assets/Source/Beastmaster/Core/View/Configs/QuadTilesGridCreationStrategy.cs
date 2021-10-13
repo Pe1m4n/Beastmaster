@@ -1,5 +1,6 @@
 ﻿using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using UnityEngine;
 
 namespace Beastmaster.Core.View.Configs

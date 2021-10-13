@@ -1,21 +1,20 @@
 ﻿using Beastmaster.Core.Configs;
 using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Common.PathFinding;
 
 namespace Beastmaster.Core.Controllers
 {
     public class PathFinderController
     {
-        private readonly PathFinder _pathFinder;
         private readonly bool[,] _occupationData;
         
         private int _lastSelectedUnit = -1;
         private Coordinates _lastSelectedUnitCoordinates = Coordinates.None;
 
-        public PathFinderController(PathFinder pathFinder, FightConfig fightConfig)
+        public PathFinderController(FightConfig fightConfig)
         {
-            _pathFinder = pathFinder;
             _occupationData = new bool[fightConfig.LocationWidth, fightConfig.LocationHeight];
         }
 
@@ -30,10 +29,11 @@ namespace Beastmaster.Core.Controllers
             state.FightState.TryGetUnit(state.SelectedUnit, out var unitState);
             if (_lastSelectedUnit != state.SelectedUnit)
             {
+                state.CurrentPathData.Populate(state.FightState);
                 if (unitState != null)
-                    _pathFinder.CalculatePathsData(unitState.Coordinates.X, unitState.Coordinates.Y, FightStateConstants.TEMP_UNIT_SPEED, _occupationData);
-                else
-                    _pathFinder.Clear();
+                    PathFinder.CalculatePathsData(ref state.CurrentPathData, unitState.Coordinates.X,
+                        unitState.Coordinates.Y, FightStateConstants.TEMP_UNIT_SPEED);
+                
                 _lastSelectedUnit = state.SelectedUnit;
                 _lastSelectedUnitCoordinates = unitState?.Coordinates?? Coordinates.None;
             }
@@ -41,7 +41,8 @@ namespace Beastmaster.Core.Controllers
             if (unitState == null || _lastSelectedUnitCoordinates.Equals(unitState.Coordinates)) 
                 return;
             
-            _pathFinder.CalculatePathsData(unitState.Coordinates.X, unitState.Coordinates.Y, FightStateConstants.TEMP_UNIT_SPEED, _occupationData);
+            state.CurrentPathData.Populate(state.FightState);
+            PathFinder.CalculatePathsData(ref state.CurrentPathData, unitState.Coordinates.X, unitState.Coordinates.Y, FightStateConstants.TEMP_UNIT_SPEED);
             _lastSelectedUnitCoordinates = unitState.Coordinates;
         }
     }

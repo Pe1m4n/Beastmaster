@@ -6,7 +6,8 @@
         "Beastmaster.Core.State",
         "Beastmaster.Core.Primitives",
         "Beastmaster.Core.Configs",
-        "UniRx"
+        "UniRx",
+        "UniRxExtensions"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

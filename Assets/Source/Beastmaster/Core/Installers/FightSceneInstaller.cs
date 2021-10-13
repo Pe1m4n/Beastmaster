@@ -1,6 +1,7 @@
 ﻿using Beastmaster.Core.Configs;
 using Beastmaster.Core.Controllers;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 using Beastmaster.Core.View;
 using Beastmaster.Core.View.Configs;
 using Beastmaster.Core.View.Units;
@@ -25,8 +26,6 @@ namespace Beastmaster.Core.Installers
             Container.Bind<ActionsBindingContainer>().AsSingle();
             Container.BindInterfacesAndSelfTo<FightInputContainer>().AsSingle().WithArguments(_camera);
             Container.Bind<FightStateContainer>().AsSingle().WithArguments(_fightConfig);
-            Container.Bind<PathFinder>().AsSingle()
-                .WithArguments(_fightConfig.LocationWidth, _fightConfig.LocationHeight);
             
             BindViews();
             

@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Beastmaster.Core.State;
+using Beastmaster.Core.State.Fight;
 
 namespace Beastmaster.Core.View
 {
