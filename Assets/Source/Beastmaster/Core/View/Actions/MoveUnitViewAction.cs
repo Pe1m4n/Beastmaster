@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Beastmaster.Core.Controllers;
-using Beastmaster.Core.State;
+using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State.Fight;
 using Beastmaster.Core.View.Units;
 using Common.UniRxExtensions;
@@ -27,15 +26,20 @@ namespace Beastmaster.Core.View
             var targetView = _unitsView.GetUnitView(data.UnitId);
             var viewState = state.UnitViewStates[data.UnitId].AnimationState;
             viewState.CurrentAnimation = AnimationNames.WALK;
-            
-            using(var disposable = new CompositeDisposable())
+
+            using (var disposable = new CompositeDisposable())
             {
                 for (int i = 1; i < data.Path.Length; i++)
                 {
-                    await MoveUnitToPosition(targetView, _tilesView.GetViewPosition(state.FightState, data.Path[i]),
-                        disposable);
-                }
+                    var desiredDirection = data.Path[i - 1].GetLookAtDirection(data.Path[i]);
+                    var desiredRotation = ViewConstants.Directions[desiredDirection];
+                    if (targetView.transform.rotation != desiredRotation)
+                        await RotateUnit(targetView, desiredRotation, disposable);
+                   
+                    await MoveUnitToPosition(targetView, _tilesView.GetViewPosition(state.FightState, data.Path[i]), disposable);
+                }    
             }
+            
             
             viewState.CurrentAnimation = AnimationNames.IDLE;
         }
@@ -50,6 +54,24 @@ namespace Beastmaster.Core.View
                 var newPos = Vector3.Lerp(origin, destination, p);
                 target.transform.position = newPos;
             }, () => tcs.SetResult(true)).AddTo(disposables);
+            
+            return tcs.Task;
+        }
+        
+        public static Task RotateUnit(UnitView target, Quaternion rotation, ICollection<IDisposable> disposables)
+        {
+            var origin = target.transform.rotation;
+            const float timeToTurn = 0.5f;
+            var tcs = new TaskCompletionSource<bool>();
+            UniRxExtensions.TimerTween(timeToTurn).Subscribe(p =>
+            {
+                var newRotation = Quaternion.Lerp(origin, rotation, p);
+                target.transform.rotation = newRotation;
+            }, () =>
+            {
+                target.transform.rotation = rotation;
+                tcs.SetResult(true);
+            }).AddTo(disposables);
             
             return tcs.Task;
         }

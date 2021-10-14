@@ -7,6 +7,8 @@ namespace Beastmaster.Core.Configs
     {
         public int UnitTypeId;
         
+        
+        
         public UnitConfig(int unitTypeId)
         {
             UnitTypeId = unitTypeId;

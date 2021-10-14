@@ -44,5 +44,10 @@ namespace Beastmaster.Core.State.Fight
 
             return false;
         }
+
+        public static Direction GetLookAtDirection(this UnitState unit, Coordinates target)
+        {
+            return unit.Coordinates.GetLookAtDirection(target);
+        }
     }
 }

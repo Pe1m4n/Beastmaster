@@ -27,8 +27,7 @@ namespace Beastmaster.Core.Installers
             Container.BindInterfacesAndSelfTo<FightInputContainer>().AsSingle().WithArguments(_camera);
             Container.Bind<FightStateContainer>().AsSingle().WithArguments(_fightConfig);
             
-            BindViews();
-            
+            BindViews(); 
         }
 
         private void BindViews()
