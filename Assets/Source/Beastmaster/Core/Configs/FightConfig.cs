@@ -7,31 +7,35 @@ namespace Beastmaster.Core.Configs
     [Serializable]
     public struct FightConfig
     {
-        public int LocationWidth;
-        public int LocationHeight;
+        public short LocationWidth;
+        public short LocationHeight;
+
+        public short TurnTimeSeconds;
 
         public Coordinates[] LeftPlayerSpawnPoints;
         public Coordinates[] RightPlayerSpawnPoints;
 
-        public UnitConfig[] LeftPlayerUnits;
-        public UnitConfig[] RightPlayerUnits;
+        public PlayerData LeftPlayerData;
+        public PlayerData RightPlayerData;
         
-        public FightConfig(int locationWidth,
-            int locationHeight,
+        public FightConfig(short locationWidth,
+            short locationHeight,
+            short turnTimeSeconds,
             Coordinates[] leftPlayerSpawnPoints,
             Coordinates[] rightPlayerSpawnPoints,
-            UnitConfig[] leftPlayerUnits,
-            UnitConfig[] rightPlayerUnits)
+            PlayerData leftPlayerData,
+            PlayerData rightPlayerData)
         {
             LocationWidth = locationWidth;
             LocationHeight = locationHeight;
+            TurnTimeSeconds = turnTimeSeconds;
             LeftPlayerSpawnPoints = leftPlayerSpawnPoints;
             RightPlayerSpawnPoints = rightPlayerSpawnPoints;
-            LeftPlayerUnits = leftPlayerUnits;
-            RightPlayerUnits = rightPlayerUnits;
+            LeftPlayerData = leftPlayerData;
+            RightPlayerData = rightPlayerData;
             
-            Debug.Assert(LeftPlayerUnits.Length == LeftPlayerSpawnPoints.Length);
-            Debug.Assert(RightPlayerUnits.Length == RightPlayerSpawnPoints.Length);
+            Debug.Assert(LeftPlayerData.Units.Length == LeftPlayerSpawnPoints.Length);
+            Debug.Assert(RightPlayerData.Units.Length == RightPlayerSpawnPoints.Length);
         }
     }
 }

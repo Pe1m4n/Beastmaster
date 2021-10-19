@@ -11,7 +11,7 @@ namespace Beastmaster.Core.State.Fight
             public readonly int UnitId;
             public readonly Path Path;
                 
-            public Data(int unitId, Path path, bool immutable = false) : base(immutable)
+            public Data(byte playerId, int unitId, Path path, bool immutable = false) : base(playerId, immutable)
             {
                 Path = path;
                 UnitId = unitId;

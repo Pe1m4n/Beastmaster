@@ -14,9 +14,9 @@ namespace Beastmaster.Core.Controllers
 
         private readonly PathFinderController _pathFinderController;
         
-        public PlayerController(IFightInputProvider fightInputProvider, FightConfig fightConfig)
+        public PlayerController(IFightInputProvider fightInputProvider)
         {
-            _pathFinderController = new PathFinderController(fightConfig);
+            _pathFinderController = new PathFinderController();
             _stateMachine = new StateMachine<EStateType, EActionType, (PlayerState, List<ActionData>)>(new StateTypeEqualityComparer(),
                 new ActionsTypeEqualityComparer());
 

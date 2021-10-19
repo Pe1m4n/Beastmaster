@@ -28,6 +28,8 @@ namespace Beastmaster.Core.View
         public void ApplyState(ViewState state)
         {
             var pathData = state.PlayerState.CurrentPathData;
+
+            var showPaths = state.PlayerState.IsPlayerTurn() && state.PlayerState.PlayerControlledUnitSelected();
             
             for (int i = 0; i < _tileViews.Length; i++)
             {
@@ -37,7 +39,7 @@ namespace Beastmaster.Core.View
                 {
                     tile.SetColor(Color.yellow);
                 }
-                else if (pathData.AvailableForPathing(tile.Coordinates.X, tile.Coordinates.Y))
+                else if (showPaths && pathData.AvailableForPathing(tile.Coordinates.X, tile.Coordinates.Y))
                 {
                     tile.SetColor(Color.green);
                 }

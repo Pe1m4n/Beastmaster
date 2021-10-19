@@ -28,6 +28,9 @@ MonoBehaviour:
     - Name: _locationHeight
       Entry: 3
       Data: 7
+    - Name: _turnTimeSeconds
+      Entry: 3
+      Data: 90
     - Name: _leftPlayerSpawnPoints
       Entry: 7
       Data: 0|Beastmaster.Core.Primitives.Coordinates[], Beastmaster.Core.Primitives
@@ -166,3 +169,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: _leftPlayerNickname
+      Entry: 1
+      Data: Player_Left
+    - Name: _rightPlayerNickname
+      Entry: 1
+      Data: Player_Right

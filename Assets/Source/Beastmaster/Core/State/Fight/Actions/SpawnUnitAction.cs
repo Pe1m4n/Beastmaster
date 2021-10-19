@@ -7,13 +7,11 @@ namespace Beastmaster.Core.State.Fight
     {
         public class Data : ActionData
         {
-            public readonly int PlayerId;
             public readonly UnitConfig Config;
             public readonly Coordinates Coordinates;
 
-            public Data(int playerId, UnitConfig config, Coordinates coordinates, bool immutable = false) : base(immutable)
+            public Data(byte playerId, UnitConfig config, Coordinates coordinates, bool immutable = false) : base(playerId, immutable)
             {
-                PlayerId = playerId;
                 Config = config;
                 Coordinates = coordinates;
             }

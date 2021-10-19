@@ -30,12 +30,16 @@ namespace Beastmaster.Core
             _fightStateContainer = fightStateContainer;
             _playerController = playerController;
             _fightInputContainer = fightInputContainer;
-            _playerState = new PlayerState(_fightStateContainer.State);
+            _playerState = new PlayerState(0, _fightStateContainer.State); //TODO: local player id getter
             _viewState = new ViewState(_fightStateContainer.State, _playerState);
         }
         
         public void Tick()
         {
+            var state = _fightStateContainer.GetLatestState();
+            _playerState.FightState = state;
+            _viewState.FightState = state;
+            
             _fightInputContainer.Tick();
             _playerController.Tick(_playerState, _actionsThisFrame);
             _viewsContainer.ApplyState(_viewState);

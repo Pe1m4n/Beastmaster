@@ -12,10 +12,12 @@
     
     public abstract class ActionData
     {
-        public bool Immutable { get; }
+        public readonly byte PlayerId;
+        public readonly bool Immutable;
 
-        protected ActionData(bool immutable)
+        protected ActionData(byte playerId, bool immutable)
         {
+            PlayerId = playerId;
             Immutable = immutable;
         }
     }

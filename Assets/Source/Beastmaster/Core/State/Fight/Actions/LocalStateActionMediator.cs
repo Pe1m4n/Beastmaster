@@ -15,6 +15,9 @@ namespace Beastmaster.Core.State.Fight
 
         public void PerformAction(ActionData data)
         {
+            if (_fightStateContainer.State.Meta.TurnForPlayer != data.PlayerId)
+                return;
+            
             _actionsBindingContainer.GetActionForData(data).Invoke(_fightStateContainer.State, data);
             _fightStateContainer.State.Actions.Add(data);
         }

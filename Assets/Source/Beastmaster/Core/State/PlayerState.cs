@@ -6,7 +6,8 @@ namespace Beastmaster.Core.State
 {
     public class PlayerState
     {
-        public FightState FightState { get; }
+        public byte PlayerId => FightState.Meta.TurnForPlayer; //TODO: May cause bugs. For debug purposes only. Remove later. 
+        public FightState FightState;
 
         public Coordinates HoveredTile = Coordinates.None;
         public Coordinates SelectedTile = Coordinates.None;
@@ -16,8 +17,9 @@ namespace Beastmaster.Core.State
 
         public PathFinder.TilesData CurrentPathData;
 
-        public PlayerState(FightState fightState)
+        public PlayerState(byte playerId, FightState fightState) 
         {
+            //PlayerId = playerId;
             FightState = fightState;
             CurrentPathData = new PathFinder.TilesData(FightState.FightConfig.LocationWidth,
                 FightState.FightConfig.LocationHeight);

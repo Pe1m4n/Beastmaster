@@ -24,7 +24,7 @@ namespace Beastmaster.Core.Installers
             
             Container.BindInterfacesTo<GameLoop>().AsSingle().NonLazy();
             Container.BindInterfacesTo<LocalStateActionMediator>().AsSingle();
-            Container.Bind<PlayerController>().AsSingle().WithArguments(fightConfig);
+            Container.Bind<PlayerController>().AsSingle();
             Container.Bind<ActionsBindingContainer>().AsSingle();
             Container.BindInterfacesAndSelfTo<FightInputContainer>().AsSingle().WithArguments(_camera);
             Container.Bind<FightStateContainer>().AsSingle().WithArguments(fightConfig);

@@ -7,7 +7,7 @@ namespace Beastmaster.Core.State.Fight
 {
     public static class UnitStateExtensions
     {
-        internal static void AddUnit(this FightState state, int playerId, UnitConfig config, Coordinates coordinates)
+        internal static void AddUnit(this FightState state, byte playerId, UnitConfig config, Coordinates coordinates)
         {
             var tile = state.GetTile(coordinates);
             if (tile.OccupantId >= 0)

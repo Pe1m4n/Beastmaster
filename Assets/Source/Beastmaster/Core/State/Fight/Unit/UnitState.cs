@@ -4,11 +4,11 @@ namespace Beastmaster.Core.State.Fight
 {
     public class UnitState
     {
-        public int OwnerId { get; set; }
-        public int UnitTypeId { get; set; }
-        public int Id { get; set; }
-        public Coordinates Coordinates { get; set; }
-        public Direction Direction { get; set; }
-        public AttributesState Attributes { get; set; }
+        public byte OwnerId;
+        public int UnitTypeId;
+        public int Id;
+        public Coordinates Coordinates;
+        public Direction Direction;
+        public AttributesState Attributes;
     }
 }

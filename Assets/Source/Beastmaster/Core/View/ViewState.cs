@@ -7,7 +7,7 @@ namespace Beastmaster.Core.View
 {
     public class ViewState
     {
-        public FightState FightState { get; }
+        public FightState FightState;
         public PlayerState PlayerState { get; }
         public List<UnitViewState> UnitViewStates { get; } = new List<UnitViewState>();
 

@@ -8,42 +8,26 @@ namespace Beastmaster.Core.Controllers
 {
     public class PathFinderController
     {
-        private readonly bool[,] _occupationData;
-        
-        private int _lastSelectedUnit = -1;
+        private int _lastSelectedUnit = FightStateConstants.NO_UNIT;
         private Coordinates _lastSelectedUnitCoordinates = Coordinates.None;
-
-        public PathFinderController(FightConfig fightConfig)
-        {
-            _occupationData = new bool[fightConfig.LocationWidth, fightConfig.LocationHeight];
-        }
 
         public void Tick(PlayerState state)
         {
-            for (int x = 0; x < _occupationData.GetLength(0); x++)
-            for (int y = 0; y < _occupationData.GetLength(1); y++)
-            {
-                _occupationData[x, y] = state.FightState.GetTile(new Coordinates{X = x, Y = y}).OccupantId != FightStateConstants.TILE_NOT_OCCUPIED;
-            }
-            
             state.FightState.TryGetUnit(state.SelectedUnit, out var unitState);
-            if (_lastSelectedUnit != state.SelectedUnit)
+
+            var shouldCalculatePath = unitState != null 
+                                      && (_lastSelectedUnit != unitState.Id || !_lastSelectedUnitCoordinates.Equals(unitState.Coordinates))
+                                      && unitState.OwnerId == state.PlayerId;
+
+            if (shouldCalculatePath)
             {
                 state.CurrentPathData.Populate(state.FightState);
-                if (unitState != null)
-                    PathFinder.CalculatePathsData(ref state.CurrentPathData, unitState.Coordinates.X,
-                        unitState.Coordinates.Y, (sbyte)unitState.Attributes.Values[AttributeType.MovePoints]);
-                
-                _lastSelectedUnit = state.SelectedUnit;
-                _lastSelectedUnitCoordinates = unitState?.Coordinates?? Coordinates.None;
+                PathFinder.CalculatePathsData(ref state.CurrentPathData, unitState.Coordinates.X,
+                    unitState.Coordinates.Y, (sbyte)unitState.Attributes.Values[AttributeType.MovePoints]);
             }
 
-            if (unitState == null || _lastSelectedUnitCoordinates.Equals(unitState.Coordinates)) 
-                return;
-            
-            state.CurrentPathData.Populate(state.FightState);
-            PathFinder.CalculatePathsData(ref state.CurrentPathData, unitState.Coordinates.X, unitState.Coordinates.Y, (sbyte)unitState.Attributes.Values[AttributeType.MovePoints]);
-            _lastSelectedUnitCoordinates = unitState.Coordinates;
+            _lastSelectedUnit = unitState?.Id ?? FightStateConstants.NO_UNIT;
+            _lastSelectedUnitCoordinates = unitState?.Coordinates ?? Coordinates.None;
         }
     }
 }

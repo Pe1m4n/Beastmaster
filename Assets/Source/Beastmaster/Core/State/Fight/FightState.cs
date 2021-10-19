@@ -1,15 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Beastmaster.Core.Configs;
 using Beastmaster.Core.Primitives;
+using Beastmaster.Core.State.Fight.Meta;
 
 namespace Beastmaster.Core.State.Fight
 {
     public class FightState
     {
-        public FightConfig FightConfig { get; }
-        public TileState[] Tiles { get; }
-        public List<UnitState> Units { get; }
-        public List<ActionData> Actions { get; }
+        public readonly FightConfig FightConfig;
+        public readonly TileState[] Tiles;
+        public readonly List<UnitState> Units;
+        public readonly List<ActionData> Actions;
+        public readonly FightMetaState Meta;
+        
         public int UnitsSpawned { get; internal set; }
         
         public FightState(FightConfig config)
@@ -18,6 +22,8 @@ namespace Beastmaster.Core.State.Fight
             Tiles = new TileState[config.LocationHeight * config.LocationWidth];
             Units = new List<UnitState>();
             Actions = new List<ActionData>();
+
+            Meta.TurnEnd = DateTime.Now.AddSeconds(config.TurnTimeSeconds);
             
             CreateDefaultTileStates();
             CreateDefaultUnitStates();
@@ -37,21 +43,19 @@ namespace Beastmaster.Core.State.Fight
 
         private void CreateDefaultUnitStates()
         {
-            for (var i = 0; i < FightConfig.LeftPlayerUnits.Length; i++)
-            {
-                var unitConfig = FightConfig.LeftPlayerUnits[i];
-                var spawnPoint = FightConfig.LeftPlayerSpawnPoints[i];
+            AddPlayerUnits(FightConfig.LeftPlayerData, FightConfig.LeftPlayerSpawnPoints);
+            AddPlayerUnits(FightConfig.RightPlayerData, FightConfig.RightPlayerSpawnPoints);
+        }
 
-                this.AddUnit(FightStateConstants.LEFT_PLAYER_ID, unitConfig, spawnPoint);
-            }
-            
-            for (var i = 0; i < FightConfig.RightPlayerUnits.Length; i++)
+        private void AddPlayerUnits(in PlayerData playerData, Coordinates[] spawnPoints)
+        {
+            for (var i = 0; i < playerData.Units.Length; i++)
             {
-                var unitConfig = FightConfig.RightPlayerUnits[i];
-                var spawnPoint = FightConfig.RightPlayerSpawnPoints[i];
+                var unitConfig = playerData.Units[i];
+                var spawnPoint = spawnPoints[i];
 
-                this.AddUnit(FightStateConstants.RIGHT_PLAYER_ID, unitConfig, spawnPoint);
-            }
+                this.AddUnit(playerData.PlayerId, unitConfig, spawnPoint);
+            }   
         }
     }
 }

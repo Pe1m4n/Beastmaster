@@ -29,7 +29,8 @@ namespace Beastmaster.Core.Controllers
                 playerState.SelectedUnit = playerState.HoveredUnit;
             }
 
-            if (_fightInputProvider.RMBClicked() 
+            if (_fightInputProvider.RMBClicked()
+                && playerState.IsPlayerTurn()
                 && !playerState.HoveredTile.Equals(Coordinates.None)
                 && playerState.FightState.TryGetUnit(playerState.SelectedUnit, out var unitState)
                 && playerState.FightState.TryGetTile(playerState.HoveredTile, out var tileState)
@@ -40,6 +41,7 @@ namespace Beastmaster.Core.Controllers
                 Debug.Assert(playerState.CurrentPathData.TryFillPath(path, unitState.Coordinates, tileState.Coordinates));
                 
                 context.Actions.Add(new MoveUnitAction.Data(
+                    playerState.PlayerId,
                     playerState.SelectedUnit,
                     path));
             }
