@@ -9,5 +9,6 @@ namespace Beastmaster.Core.State.Fight
         public int Id { get; set; }
         public Coordinates Coordinates { get; set; }
         public Direction Direction { get; set; }
+        public AttributesState Attributes { get; set; }
     }
 }

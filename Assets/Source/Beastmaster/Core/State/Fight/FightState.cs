@@ -42,7 +42,7 @@ namespace Beastmaster.Core.State.Fight
                 var unitConfig = FightConfig.LeftPlayerUnits[i];
                 var spawnPoint = FightConfig.LeftPlayerSpawnPoints[i];
 
-                this.AddUnit(FightStateConstants.LEFT_PLAYER_ID, unitConfig.UnitTypeId, spawnPoint);
+                this.AddUnit(FightStateConstants.LEFT_PLAYER_ID, unitConfig, spawnPoint);
             }
             
             for (var i = 0; i < FightConfig.RightPlayerUnits.Length; i++)
@@ -50,7 +50,7 @@ namespace Beastmaster.Core.State.Fight
                 var unitConfig = FightConfig.RightPlayerUnits[i];
                 var spawnPoint = FightConfig.RightPlayerSpawnPoints[i];
 
-                this.AddUnit(FightStateConstants.RIGHT_PLAYER_ID, unitConfig.UnitTypeId, spawnPoint);
+                this.AddUnit(FightStateConstants.RIGHT_PLAYER_ID, unitConfig, spawnPoint);
             }
         }
     }

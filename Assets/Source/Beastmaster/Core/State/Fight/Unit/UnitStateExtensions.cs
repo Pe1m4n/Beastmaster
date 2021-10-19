@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using Beastmaster.Core.Configs;
 using Beastmaster.Core.Primitives;
 
 namespace Beastmaster.Core.State.Fight
 {
     public static class UnitStateExtensions
     {
-        internal static void AddUnit(this FightState state, int playerId, int unitType, Coordinates coordinates)
+        internal static void AddUnit(this FightState state, int playerId, UnitConfig config, Coordinates coordinates)
         {
             var tile = state.GetTile(coordinates);
             if (tile.OccupantId >= 0)
             {
-                throw new InvalidOperationException($"Can't spawn unit {unitType} on tile {coordinates} since it's already occupied");
+                throw new InvalidOperationException($"Can't spawn unit {config.UnitTypeId} on tile {coordinates} since it's already occupied");
             }
 
             var unit = new UnitState()
@@ -18,7 +20,8 @@ namespace Beastmaster.Core.State.Fight
                 OwnerId = playerId,
                 Coordinates = coordinates,
                 Id = state.UnitsSpawned++,
-                UnitTypeId = unitType
+                UnitTypeId = config.UnitTypeId,
+                Attributes = new AttributesState(new Dictionary<AttributeType, int>(config.Attributes))
             };
 
             state.Units.Add(unit);
@@ -48,6 +51,16 @@ namespace Beastmaster.Core.State.Fight
         public static Direction GetLookAtDirection(this UnitState unit, Coordinates target)
         {
             return unit.Coordinates.GetLookAtDirection(target);
+        }
+        
+        
+        public static void SetAttribute(this UnitState unit, AttributeType type, int value)
+        {
+        }
+
+        private static void ClampAttributeValue()
+        {
+            
         }
     }
 }

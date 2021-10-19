@@ -1,4 +1,5 @@
-﻿using Beastmaster.Core.Primitives;
+﻿using Beastmaster.Core.Configs;
+using Beastmaster.Core.Primitives;
 
 namespace Beastmaster.Core.State.Fight
 {
@@ -7,20 +8,20 @@ namespace Beastmaster.Core.State.Fight
         public class Data : ActionData
         {
             public readonly int PlayerId;
-            public readonly int UnitTypeId;
+            public readonly UnitConfig Config;
             public readonly Coordinates Coordinates;
 
-            public Data(int playerId, int unitTypeId, Coordinates coordinates, bool immutable = false) : base(immutable)
+            public Data(int playerId, UnitConfig config, Coordinates coordinates, bool immutable = false) : base(immutable)
             {
                 PlayerId = playerId;
-                UnitTypeId = unitTypeId;
+                Config = config;
                 Coordinates = coordinates;
             }
         }
 
         protected override void Execute(FightState state, Data data)
         {
-            state.AddUnit(data.UnitTypeId, data.PlayerId, data.Coordinates);   
+            state.AddUnit(data.PlayerId, data.Config, data.Coordinates);   
         }
     }
 }

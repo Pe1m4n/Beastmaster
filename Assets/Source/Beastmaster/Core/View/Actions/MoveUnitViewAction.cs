@@ -40,7 +40,6 @@ namespace Beastmaster.Core.View
                 }    
             }
             
-            
             viewState.CurrentAnimation = AnimationNames.IDLE;
         }
 

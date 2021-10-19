@@ -32,7 +32,7 @@ namespace Beastmaster.Core.Controllers
                 state.CurrentPathData.Populate(state.FightState);
                 if (unitState != null)
                     PathFinder.CalculatePathsData(ref state.CurrentPathData, unitState.Coordinates.X,
-                        unitState.Coordinates.Y, FightStateConstants.TEMP_UNIT_SPEED);
+                        unitState.Coordinates.Y, (sbyte)unitState.Attributes.Values[AttributeType.MovePoints]);
                 
                 _lastSelectedUnit = state.SelectedUnit;
                 _lastSelectedUnitCoordinates = unitState?.Coordinates?? Coordinates.None;
@@ -42,7 +42,7 @@ namespace Beastmaster.Core.Controllers
                 return;
             
             state.CurrentPathData.Populate(state.FightState);
-            PathFinder.CalculatePathsData(ref state.CurrentPathData, unitState.Coordinates.X, unitState.Coordinates.Y, FightStateConstants.TEMP_UNIT_SPEED);
+            PathFinder.CalculatePathsData(ref state.CurrentPathData, unitState.Coordinates.X, unitState.Coordinates.Y, (sbyte)unitState.Attributes.Values[AttributeType.MovePoints]);
             _lastSelectedUnitCoordinates = unitState.Coordinates;
         }
     }

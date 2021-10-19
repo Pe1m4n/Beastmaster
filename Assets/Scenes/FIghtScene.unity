@@ -212,6 +212,7 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -295,6 +296,7 @@ Transform:
   m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
   m_LocalPosition: {x: 5, y: 8, z: -9.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -359,6 +361,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -377,29 +380,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 699666183}
   _tileGridCreationStrategy: {fileID: 11400000, guid: 0e3b510db1f2ee64e901ea532b0e6c36, type: 2}
-  _fightConfig:
-    LocationWidth: 10
-    LocationHeight: 7
-    LeftPlayerSpawnPoints:
-    - X: 0
-      Y: 1
-    - X: 1
-      Y: 3
-    - X: 0
-      Y: 5
-    RightPlayerSpawnPoints:
-    - X: 9
-      Y: 1
-    - X: 8
-      Y: 3
-    - X: 9
-      Y: 5
-    LeftPlayerUnits:
-    - UnitTypeId: 0
-    - UnitTypeId: 0
-    - UnitTypeId: 0
-    RightPlayerUnits:
-    - UnitTypeId: 0
-    - UnitTypeId: 0
-    - UnitTypeId: 0
+  _testFightConfigFactory: {fileID: 11400000, guid: 3829b84a9cd4952498efb446b68396cd, type: 2}
   _unitPrefabProvider: {fileID: 11400000, guid: c3d98ad2fdeaa2a46afddf424f7cc4dd, type: 2}

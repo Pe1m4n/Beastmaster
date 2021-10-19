@@ -15,17 +15,19 @@ namespace Beastmaster.Core.Installers
     {
         [SerializeField] private Camera _camera;
         [SerializeField] private TileGridCreationStrategy _tileGridCreationStrategy;
-        [SerializeField] private FightConfig _fightConfig;
+        [SerializeField] private TestFightConfigFactory _testFightConfigFactory; //TODO: pass from outside
         [SerializeField] private UnitPrefabProvider _unitPrefabProvider;
         
         public override void InstallBindings()
         {
+            var fightConfig = _testFightConfigFactory.Create();
+            
             Container.BindInterfacesTo<GameLoop>().AsSingle().NonLazy();
             Container.BindInterfacesTo<LocalStateActionMediator>().AsSingle();
-            Container.Bind<PlayerController>().AsSingle().WithArguments(_fightConfig);
+            Container.Bind<PlayerController>().AsSingle().WithArguments(fightConfig);
             Container.Bind<ActionsBindingContainer>().AsSingle();
             Container.BindInterfacesAndSelfTo<FightInputContainer>().AsSingle().WithArguments(_camera);
-            Container.Bind<FightStateContainer>().AsSingle().WithArguments(_fightConfig);
+            Container.Bind<FightStateContainer>().AsSingle().WithArguments(fightConfig);
             
             BindViews(); 
         }

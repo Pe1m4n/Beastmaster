@@ -26,10 +26,13 @@ namespace Beastmaster.Core.State.Fight
             }
             
             var coordinatesFrom = data.Path[0];
-            var coordinatesTo = data.Path[data.Path.Length - 1];
+            var coordinatesTo = data.Path[^1];
             
             var origin = state.GetTile(coordinatesFrom);
             var destination = state.GetTile(coordinatesTo);
+
+            var direction = data.Path[^2].GetLookAtDirection(coordinatesTo);
+            var movePointsSpent = data.Path.Length - 1;
             
             Debug.Assert(unit.Coordinates.Equals(coordinatesFrom));
             Debug.Assert(destination.OccupantId == FightStateConstants.TILE_NOT_OCCUPIED);
@@ -37,6 +40,8 @@ namespace Beastmaster.Core.State.Fight
             origin.OccupantId = FightStateConstants.TILE_NOT_OCCUPIED;
             destination.OccupantId = unit.Id;
             unit.Coordinates = coordinatesTo;
+            unit.Direction = direction;
+            unit.Attributes.Values[AttributeType.MovePoints] -= movePointsSpent;
         }
     }
 }

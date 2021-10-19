@@ -1,0 +1,9 @@
+﻿{
+  "name": "Beastmaster.Editor",
+  "references": [
+    "Beastmaster.Core.Configs"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}
