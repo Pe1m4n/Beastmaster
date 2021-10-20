@@ -1,4 +1,5 @@
-﻿using Beastmaster.Core.Primitives;
+﻿using Beastmaster.Core.Configs;
+using Beastmaster.Core.Primitives;
 
 namespace Beastmaster.Core.State.Fight
 {
@@ -9,6 +10,7 @@ namespace Beastmaster.Core.State.Fight
         public int Id;
         public Coordinates Coordinates;
         public Direction Direction;
+        public UnitConfig UnitConfig;
         public AttributesState Attributes;
     }
 }

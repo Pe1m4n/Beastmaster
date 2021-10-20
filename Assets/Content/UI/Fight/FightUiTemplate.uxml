@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Content/UI/styles-sheet.uss?fileID=7433441132597879392&amp;guid=fdc5fd13ab0873047bb1f67602c18401&amp;type=3#styles-sheet" />
+    <ui:VisualElement name="Background" style="height: 100%;">
+        <ui:VisualElement name="TopHud" style="height: 30px; align-items: center; justify-content: center; flex-direction: row;">
+            <ui:Label text="Nickname_Left" display-tooltip-when-elided="false" name="Nickname_Left" class="nickname-style" />
+            <ui:Label text="90" display-tooltip-when-elided="true" name="TurnTimerLabel" style="width: 38px; height: auto; color: rgba(243, 237, 237, 255); -unity-text-align: upper-center; font-size: 25px; -unity-font-style: normal;" />
+            <ui:Label text="Nickname_Right" display-tooltip-when-elided="true" name="Nickname_Right" class="nickname-style" style="left: auto; right: 40px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

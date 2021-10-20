@@ -12,7 +12,7 @@ namespace Beastmaster.Core.State.Fight
         public readonly TileState[] Tiles;
         public readonly List<UnitState> Units;
         public readonly List<ActionData> Actions;
-        public readonly FightMetaState Meta;
+        public FightMetaState Meta;
         
         public int UnitsSpawned { get; internal set; }
         

@@ -4,6 +4,7 @@ using Beastmaster.Core.State;
 using Beastmaster.Core.State.Fight;
 using Beastmaster.Core.View;
 using Beastmaster.Core.View.Configs;
+using Beastmaster.Core.View.UI;
 using Beastmaster.Core.View.Units;
 using Common.PathFinding;
 using UnityEngine;
@@ -17,7 +18,12 @@ namespace Beastmaster.Core.Installers
         [SerializeField] private TileGridCreationStrategy _tileGridCreationStrategy;
         [SerializeField] private TestFightConfigFactory _testFightConfigFactory; //TODO: pass from outside
         [SerializeField] private UnitPrefabProvider _unitPrefabProvider;
+
+        [Header("UI")] 
+        [SerializeField] private UIView _uiView;
         
+        [InjectOptional] private bool _remoteStateHandling;
+            
         public override void InstallBindings()
         {
             var fightConfig = _testFightConfigFactory.Create();
@@ -29,7 +35,16 @@ namespace Beastmaster.Core.Installers
             Container.BindInterfacesAndSelfTo<FightInputContainer>().AsSingle().WithArguments(_camera);
             Container.Bind<FightStateContainer>().AsSingle().WithArguments(fightConfig);
             
-            BindViews(); 
+            BindStateHandling();
+            BindViews();
+        }
+
+        private void BindStateHandling()
+        {
+            if (!_remoteStateHandling)
+            {
+                Container.BindInterfacesTo<LocalFightStateHandler>().AsSingle().NonLazy();
+            }
         }
 
         private void BindViews()
@@ -37,6 +52,7 @@ namespace Beastmaster.Core.Installers
             Container.Bind<ViewsContainer>().AsSingle();
             Container.Bind<TilesView>().AsSingle().WithArguments(_tileGridCreationStrategy, transform);
             Container.Bind<UnitsView>().AsSingle().WithArguments(transform);
+            Container.Bind<UIView>().FromInstance(_uiView).AsSingle();
 
             Container.BindInterfacesTo<SimpleUnitFactory>().AsSingle().WithArguments(_unitPrefabProvider);
 

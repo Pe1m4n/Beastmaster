@@ -1,0 +1,7 @@
+.nickname-style {
+    flex-grow: 0;
+    flex-direction: row-reverse;
+    position: absolute;
+    left: 40px;
+    font-size: 20px;
+}

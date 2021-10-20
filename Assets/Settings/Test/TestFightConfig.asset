@@ -30,7 +30,7 @@ MonoBehaviour:
       Data: 7
     - Name: _turnTimeSeconds
       Entry: 3
-      Data: 90
+      Data: 45
     - Name: _leftPlayerSpawnPoints
       Entry: 7
       Data: 0|Beastmaster.Core.Primitives.Coordinates[], Beastmaster.Core.Primitives

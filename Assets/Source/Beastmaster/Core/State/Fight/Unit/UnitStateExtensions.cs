@@ -21,6 +21,7 @@ namespace Beastmaster.Core.State.Fight
                 Coordinates = coordinates,
                 Id = state.UnitsSpawned++,
                 UnitTypeId = config.UnitTypeId,
+                UnitConfig = config,
                 Attributes = new AttributesState(new Dictionary<AttributeType, int>(config.Attributes))
             };
 
@@ -51,16 +52,6 @@ namespace Beastmaster.Core.State.Fight
         public static Direction GetLookAtDirection(this UnitState unit, Coordinates target)
         {
             return unit.Coordinates.GetLookAtDirection(target);
-        }
-        
-        
-        public static void SetAttribute(this UnitState unit, AttributeType type, int value)
-        {
-        }
-
-        private static void ClampAttributeValue()
-        {
-            
         }
     }
 }
