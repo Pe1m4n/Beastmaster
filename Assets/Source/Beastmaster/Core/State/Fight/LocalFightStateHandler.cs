@@ -1,9 +1,8 @@
 ﻿using System;
-using Zenject;
 
 namespace Beastmaster.Core.State.Fight
 {
-    public class LocalFightStateHandler : ITickable
+    public class LocalFightStateHandler
     {
         private readonly FightStateContainer _stateContainer;
 

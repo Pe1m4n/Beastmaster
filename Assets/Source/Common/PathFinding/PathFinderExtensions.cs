@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Common.PathFinding
+﻿namespace Common.PathFinding
 {
     public static class PathFinderExtensions
     {

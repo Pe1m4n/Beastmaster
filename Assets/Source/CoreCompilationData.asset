@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0bd900b42cd11142a34577885cdf280, type: 3}
+  m_Name: CoreCompilationData
+  m_EditorClassIdentifier: 
+  OutputNameWithoutExtension: BeastmasterCore
+  OutputDir: Assets/Source/
+  UnityAssemblyReferences:
+  - {fileID: 5897886265953266890, guid: d9704d76803640c6abc31335b310fa2c, type: 3}
+  - {fileID: 5897886265953266890, guid: d6503d6acacec594ab9520440e96f8b5, type: 3}
+  - {fileID: 5897886265953266890, guid: af5c43ab8e6c03c4781551dfd0aba57e, type: 3}
+  - {fileID: 5897886265953266890, guid: 6c7b98aed0ef4587940ff62e873e8054, type: 3}
+  Unsafe: 1

@@ -1,0 +1,9 @@
+﻿{
+  "name": "EditorTools",
+  "references": [
+    "RoslynAssembly"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

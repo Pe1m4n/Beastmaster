@@ -1,6 +1,4 @@
-﻿using Beastmaster.Core.Controllers;
-using Beastmaster.Core.Primitives;
-using UnityEngine;
+﻿using Beastmaster.Core.Primitives;
 
 namespace Beastmaster.Core.State.Fight
 {
@@ -22,7 +20,7 @@ namespace Beastmaster.Core.State.Fight
         {
             if (!state.TryGetUnit(data.UnitId, out var unit))
             {
-                Debug.LogError($"{nameof(MoveUnitAction)} Error: Couldn't get unit with id {data.UnitId}");
+                System.Diagnostics.Debug.Print($"{nameof(MoveUnitAction)} Error: Couldn't get unit with id {data.UnitId}");
             }
             
             var coordinatesFrom = data.Path[0];
@@ -34,8 +32,8 @@ namespace Beastmaster.Core.State.Fight
             var direction = data.Path[^2].GetLookAtDirection(coordinatesTo);
             var movePointsSpent = data.Path.Length - 1;
             
-            Debug.Assert(unit.Coordinates.Equals(coordinatesFrom));
-            Debug.Assert(destination.OccupantId == FightStateConstants.TILE_NOT_OCCUPIED);
+            System.Diagnostics.Debug.Assert(unit.Coordinates.Equals(coordinatesFrom));
+            System.Diagnostics.Debug.Assert(destination.OccupantId == FightStateConstants.TILE_NOT_OCCUPIED);
 
             origin.OccupantId = FightStateConstants.TILE_NOT_OCCUPIED;
             destination.OccupantId = unit.Id;

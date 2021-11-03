@@ -1,6 +1,5 @@
 ﻿using System;
 using Beastmaster.Core.Primitives;
-using UnityEngine;
 
 namespace Beastmaster.Core.Configs
 {
@@ -34,8 +33,9 @@ namespace Beastmaster.Core.Configs
             LeftPlayerData = leftPlayerData;
             RightPlayerData = rightPlayerData;
             
-            Debug.Assert(LeftPlayerData.Units.Length == LeftPlayerSpawnPoints.Length);
-            Debug.Assert(RightPlayerData.Units.Length == RightPlayerSpawnPoints.Length);
+            
+            System.Diagnostics.Debug.Assert(LeftPlayerData.Units.Length == LeftPlayerSpawnPoints.Length);
+            System.Diagnostics.Debug.Assert(RightPlayerData.Units.Length == RightPlayerSpawnPoints.Length);
         }
     }
 }

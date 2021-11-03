@@ -1,7 +1,6 @@
 ﻿using Beastmaster.Core.Primitives;
 using Beastmaster.Core.State.Fight;
 using Common.PathFinding;
-using UnityEngine;
 
 namespace Beastmaster.Core.Controllers
 {
@@ -54,7 +53,7 @@ namespace Beastmaster.Core.Controllers
                 if (neighbours[i].TotalCost == target.TotalCost - 1)
                     return ref neighbours[i];
             }
-            Debug.LogAssertion("Couldn't find any walkable neighbour");
+            System.Diagnostics.Debug.Print("Couldn't find any walkable neighbour");
             return ref PathFinder.Tile.InvalidTile;
         }
 

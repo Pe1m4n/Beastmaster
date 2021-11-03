@@ -2,6 +2,7 @@
 using Beastmaster.Core.Controllers;
 using Beastmaster.Core.State;
 using Beastmaster.Core.State.Fight;
+using Beastmaster.Core.Unity.State;
 using Beastmaster.Core.View;
 using Beastmaster.Core.View.Configs;
 using Beastmaster.Core.View.UI;
@@ -43,7 +44,8 @@ namespace Beastmaster.Core.Installers
         {
             if (!_remoteStateHandling)
             {
-                Container.BindInterfacesTo<LocalFightStateHandler>().AsSingle().NonLazy();
+                Container.Bind<LocalFightStateHandler>().AsSingle();
+                Container.BindInterfacesTo<LocalStateHandlerTicker>().AsSingle();
             }
         }
 
