@@ -1,26 +1,25 @@
 ﻿using System;
 using Beastmaster.Core.Configs;
-using Beastmaster.Core.State;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Beastmaster.Core.View.UI
 {
-    [RequireComponent(typeof(UIDocument))]
+    //[RequireComponent(typeof(UIDocument))]
     public class UIView : MonoBehaviour
     {
         private Label _turnTimeLabel;
         private Label _leftNickLabel;
         private Label _rightNickLabel;
-
+        
         private bool _initialized;
         
         private void Awake()
         {
-            var uiDocument = GetComponent<UIDocument>();
-            _turnTimeLabel = uiDocument.rootVisualElement.Q<Label>("TurnTimerLabel");
-            _leftNickLabel = uiDocument.rootVisualElement.Q<Label>("Nickname_Left");
-            _rightNickLabel = uiDocument.rootVisualElement.Q<Label>("Nickname_Right");
+            // var uiDocument = GetComponent<UIDocument>();
+            // _turnTimeLabel = uiDocument.rootVisualElement.Q<Label>("TurnTimerLabel");
+            // _leftNickLabel = uiDocument.rootVisualElement.Q<Label>("Nickname_Left");
+            // _rightNickLabel = uiDocument.rootVisualElement.Q<Label>("Nickname_Right");
         }
 
         public void ApplyState(ViewState state)

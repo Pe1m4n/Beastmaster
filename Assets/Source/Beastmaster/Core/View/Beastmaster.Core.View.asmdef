@@ -7,7 +7,8 @@
         "Beastmaster.Core.Primitives",
         "Beastmaster.Core.Configs",
         "UniRx",
-        "UniRxExtensions"
+        "UniRxExtensions",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
