@@ -47,21 +47,21 @@ namespace EditorTools.Compilation
      
             MetadataReference[] references = { mscorlib, codeAnalysis, csharpCodeAnalysis, systemDiagnostics };
 
-            var outputName = $"{compilationData.OutputNameWithoutExtension}.dll";
+            var outputName = $"{compilationData.OutputNameWithoutExtension}";
             var compilation = CSharpCompilation.Create(outputName,
                 trees,
                 references,
                 new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary, allowUnsafe: compilationData.Unsafe));
-            var result = compilation.Emit(Path.Combine(compilationData.OutputDir, outputName));
+            var result = compilation.Emit(Path.Combine(compilationData.OutputDir, $"{outputName}.dll"));
             
-            Debug.LogError($"Compilation of {outputName} was {(result.Success ? "Successful" : "Failed")}");
+            if (!result.Success)
+                File.Delete($"{Path.GetFullPath(compilationData.OutputDir)}{outputName}");
+            
+            Debug.LogError($"Compilation of {outputName}.dll was {(result.Success ? "Successful" : "Failed")}");
             foreach (var diagnostic in result.Diagnostics)
             {
                 Debug.LogError($"{diagnostic.GetMessage()} in {diagnostic.Location.SourceTree.FilePath}");
             }
-            
-            if (!result.Success)
-                File.Delete($"{Path.GetFullPath(compilationData.OutputDir)}{outputName}");
         }
         
         [MenuItem("Assets/CompileDll", true)]
