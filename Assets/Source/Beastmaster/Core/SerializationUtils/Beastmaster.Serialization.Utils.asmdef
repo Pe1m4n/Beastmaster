@@ -1,0 +1,6 @@
+﻿{
+  "name": "Beastmaster.Serialization.Utils",
+  "references": [
+    "Common.Serialization"
+  ]
+}

@@ -1,3 +1,7 @@
 ﻿{
-  "name": "Beastmaster.Core.Primitives"
+  "name": "Beastmaster.Core.Primitives",
+  "references": [
+    "Beastmaster.Serialization.Utils",
+    "Common.Serialization"    
+  ]
 }

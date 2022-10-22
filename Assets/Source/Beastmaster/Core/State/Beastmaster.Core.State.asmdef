@@ -2,8 +2,10 @@
     "name": "Beastmaster.Core.State",
     "references": [
         "Common.PathFinding",
+        "Common.Serialization",
         "Beastmaster.Core.Configs",
-        "Beastmaster.Core.Primitives"
+        "Beastmaster.Core.Primitives",
+        "Beastmaster.Serialization.Utils"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

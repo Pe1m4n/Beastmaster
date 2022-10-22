@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Newtonsoft.Json;
 using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace EditorTools.Compilation
@@ -19,13 +22,18 @@ namespace EditorTools.Compilation
                 return;
 
             var sourceFiles = new List<string>();
+
+            var excludedAsmDefs = AssetDatabase.FindAssets("t:AssemblyDefinitionAsset")
+                .Select(AssetDatabase.GUIDToAssetPath).Select(AssetDatabase.LoadAssetAtPath<AssemblyDefinitionAsset>)
+                .Where(a => !compilationData.UnityAssemblyReferences.Contains(a)).Select(AssetDatabase.GetAssetPath).Select(Path.GetDirectoryName).Select(p => p.Replace("\\", "/")).ToArray();
+            
             foreach (var asmDef in compilationData.UnityAssemblyReferences)
             {
                 var asmPath = Path.GetFullPath(AssetDatabase.GetAssetPath(asmDef));
                 var dirPath = asmPath.Remove(asmPath.LastIndexOf("\\"));
-                var directory = new DirectoryInfo(dirPath); 
+                var directory = new DirectoryInfo(dirPath);
                 sourceFiles.AddRange(directory.EnumerateFiles("*.cs", SearchOption.AllDirectories)                
-                    .Select(a => a.FullName));
+                    .Select(a => a.FullName.Replace("\\", "/")).Where(path => excludedAsmDefs.All(p => !path.Contains(p))));
             }
 
             var trees = new List<SyntaxTree>();
@@ -35,18 +43,17 @@ namespace EditorTools.Compilation
                 var tree = CSharpSyntaxTree.ParseText(code, path:file);
                 trees.Add(tree);
             }
-          
-            MetadataReference mscorlib =
-                MetadataReference.CreateFromFile(typeof(object).Assembly.Location);
-            MetadataReference codeAnalysis =
-                MetadataReference.CreateFromFile(typeof(SyntaxTree).Assembly.Location);
-            MetadataReference csharpCodeAnalysis =
-                MetadataReference.CreateFromFile(typeof(CSharpSyntaxTree).Assembly.Location);
-            MetadataReference systemDiagnostics =
-                MetadataReference.CreateFromFile(typeof(System.Diagnostics.Debug).Assembly.Location);
      
-            MetadataReference[] references = { mscorlib, codeAnalysis, csharpCodeAnalysis, systemDiagnostics };
-
+            var references = new []{ 
+                MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(SyntaxTree).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(CSharpSyntaxTree).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(System.Diagnostics.Debug).Assembly.Location),
+                MetadataReference.CreateFromFile(typeof(Enumerable).Assembly.Location),
+                MetadataReference.CreateFromFile(Assembly.Load("netstandard, Version=2.0.0.0").Location),
+                //MetadataReference.CreateFromFile(typeof(JsonConvert).Assembly.Location),
+            };
+            
             var outputName = $"{compilationData.OutputNameWithoutExtension}";
             var compilation = CSharpCompilation.Create(outputName,
                 trees,

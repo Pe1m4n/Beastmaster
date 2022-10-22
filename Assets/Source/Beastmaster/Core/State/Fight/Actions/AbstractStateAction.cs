@@ -1,4 +1,6 @@
-﻿namespace Beastmaster.Core.State.Fight
+﻿using Common.Serialization;
+
+namespace Beastmaster.Core.State.Fight
 {
     public abstract class AbstractStateAction<TState, TData> where TData: ActionData
     {
@@ -12,8 +14,8 @@
     
     public abstract class ActionData
     {
-        public readonly byte PlayerId;
-        public readonly bool Immutable;
+        [BinarySerializedField] public readonly byte PlayerId;
+        [BinarySerializedField] public readonly bool Immutable;
 
         protected ActionData(byte playerId, bool immutable)
         {

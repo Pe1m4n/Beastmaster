@@ -1,0 +1,13 @@
+﻿{
+  "name": "Beastmaster.Installers",
+  "references": [
+    "Beastmaster.Core.State",
+    "Beastmaster.Core.View",
+    "Beastmaster.Core.Configs",
+    "Beastmaster.Core.Primitives",
+    "Beastmaster.Core.Controllers",
+    "Beastmaster.Loop",
+    "Common.PathFinding",
+    "Zenject"
+  ]
+}

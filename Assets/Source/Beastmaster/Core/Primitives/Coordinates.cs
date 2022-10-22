@@ -1,8 +1,11 @@
 ﻿using System;
+using Beastmaster.Core.State.Fight.Serializers;
+using Common.Serialization;
 
 namespace Beastmaster.Core.Primitives
 {
     [Serializable]
+    [BinarySerialized(typeof(CoordinatesBinaryConverter))]
     public struct Coordinates
     {
         public static Coordinates None = new Coordinates() { X = int.MinValue, Y = int.MinValue };

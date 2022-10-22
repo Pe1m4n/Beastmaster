@@ -1,13 +1,15 @@
 ﻿using Beastmaster.Core.Primitives;
+using Common.Serialization;
 
 namespace Beastmaster.Core.State.Fight
 {
     public class MoveUnitAction : AbstractStateAction<FightState, MoveUnitAction.Data>
     {
+        [BinarySerialized(typeof(MoveUnitActionConverter))]
         public class Data : ActionData
         {
-            public readonly int UnitId;
-            public readonly Path Path;
+            [BinarySerializedField] public readonly int UnitId;
+            [BinarySerializedField] public readonly Path Path;
                 
             public Data(byte playerId, int unitId, Path path, bool immutable = false) : base(playerId, immutable)
             {

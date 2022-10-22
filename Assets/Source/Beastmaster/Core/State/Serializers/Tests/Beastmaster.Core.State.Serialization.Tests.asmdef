@@ -1,0 +1,11 @@
+﻿{
+  "name": "Beastmaster.Core.State.Serialization.Tests",
+  "includePlatforms": [
+    "Editor"
+  ],
+  "references": [
+    "Common.Serialization",
+    "Beastmaster.Core.State",
+    "Beastmaster.Core.Primitives"
+  ]
+}
