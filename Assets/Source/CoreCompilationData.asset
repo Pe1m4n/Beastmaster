@@ -15,9 +15,10 @@ MonoBehaviour:
   OutputNameWithoutExtension: BeastmasterCore
   OutputDir: Assets/Source/
   UnityAssemblyReferences:
-  - {fileID: 5897886265953266890, guid: d9704d76803640c6abc31335b310fa2c, type: 3}
+  - {fileID: 5897886265953266890, guid: d7c6e2f16a564b7da4c572a68c416ec5, type: 3}
   - {fileID: 5897886265953266890, guid: d6503d6acacec594ab9520440e96f8b5, type: 3}
   - {fileID: 5897886265953266890, guid: af5c43ab8e6c03c4781551dfd0aba57e, type: 3}
   - {fileID: 5897886265953266890, guid: 6c7b98aed0ef4587940ff62e873e8054, type: 3}
-  - {fileID: 5897886265953266890, guid: c9609062c48241e68a89f1820cd71c5e, type: 3}
+  - {fileID: 5897886265953266890, guid: 128fa38171fd4f71b6a1d00d82fabd01, type: 3}
+  - {fileID: 5897886265953266890, guid: 820bad0121e14806a4026a3e09a00e1f, type: 3}
   Unsafe: 1

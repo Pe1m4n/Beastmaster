@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 namespace Beastmaster.Core.View.UI
 {
-    //[RequireComponent(typeof(UIDocument))]
+    [RequireComponent(typeof(UIDocument))]
     public class UIView : MonoBehaviour
     {
         private Label _turnTimeLabel;
@@ -16,10 +16,10 @@ namespace Beastmaster.Core.View.UI
         
         private void Awake()
         {
-            // var uiDocument = GetComponent<UIDocument>();
-            // _turnTimeLabel = uiDocument.rootVisualElement.Q<Label>("TurnTimerLabel");
-            // _leftNickLabel = uiDocument.rootVisualElement.Q<Label>("Nickname_Left");
-            // _rightNickLabel = uiDocument.rootVisualElement.Q<Label>("Nickname_Right");
+            var uiDocument = GetComponent<UIDocument>();
+            _turnTimeLabel = uiDocument.rootVisualElement.Q<Label>("TurnTimerLabel");
+            _leftNickLabel = uiDocument.rootVisualElement.Q<Label>("Nickname_Left");
+            _rightNickLabel = uiDocument.rootVisualElement.Q<Label>("Nickname_Right");
         }
 
         public void ApplyState(ViewState state)
